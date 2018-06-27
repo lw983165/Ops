@@ -16,6 +16,7 @@
 *.sln
 *.sdf
 *.suo
+*.obj
 
 # Qt-es
 object_script.*.Release
