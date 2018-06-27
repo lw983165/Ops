@@ -15,12 +15,13 @@ Circle::~Circle()
 
 void Circle::draw(QPainter *painter)
 {
-    QBrush brush(getFillColor());
+	QColor fill = getFillColor();
+	int r = fill.red(), g = fill.green(), b = fill.blue();
+    QBrush brush(fill);
     QPen pen(getLineColor());
 
     if (getLineThickness() == 0) pen.setStyle(Qt::NoPen);
-
-    pen.setWidth(getLineThickness());
+    else pen.setWidth(getLineThickness());
 
     painter->setBrush(brush);
     painter->setPen(pen);

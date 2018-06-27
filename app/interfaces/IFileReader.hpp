@@ -7,6 +7,8 @@ class Group;
 class IFileReader
 {
 public:
+    enum ShapeType { LineT = 0, RectangleT, CircleT, Panel, SvgT, TextT, Unknown = 0xFF };
+
     virtual ~IFileReader() {}
 
     virtual void setup(Group *mainGroup) = 0;

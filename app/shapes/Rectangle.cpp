@@ -1,6 +1,8 @@
 #include "Rectangle.hpp"
 #include <QPainter>
 
+using namespace kylink;
+
 Rectangle::Rectangle()
 {
     setPosition(QPoint(10, 10));

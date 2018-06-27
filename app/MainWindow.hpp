@@ -2,6 +2,10 @@
 
 #include <QMainWindow>
 #include <memory>
+#include <QTcpServer>
+#include <QTcpSocket>
+#include <QSettings>
+#include <QDebug>
 
 class Canvas;
 class Tool;
@@ -9,8 +13,10 @@ class SelectionTool;
 class DrawCircleTool;
 class DrawRectangleTool;
 class DrawLineTool;
+class ValueChangeTool;
 class GlobalDrawProperties;
 class MainCommandStack;
+class QJsonObject;
 
 namespace Ui {
 class MainWindow;
@@ -38,6 +44,8 @@ public:
 protected:
     void closeEvent(QCloseEvent *event) override;
 
+
+
 private slots:
     void on_actionCircle_triggered();
     void on_actionRectangle_triggered();
@@ -61,9 +69,14 @@ private slots:
     void on_actionAbout_Qt_triggered();
     void on_actionAbout_me_3_triggered();
 
+    void server_New_Connect();
+    void socket_Read_Data();
+    void socket_Disconnected();
+
 private:
     void uncheckAllToolbar();
     void resetCommandStack();
+    QEvent* newValueChangeEvent(const QJsonObject* json);
 
     MainCommandStack *m_mcs;
 
@@ -76,9 +89,14 @@ private:
     int m_appStackIdx;
     bool m_isFileSet;
 
+    ///
+    QTcpServer* server;
+    QTcpSocket* socket;
+
     std::unique_ptr<SelectionTool> m_selectionTool;
     std::unique_ptr<DrawCircleTool> m_drawCircleTool;
     std::unique_ptr<DrawRectangleTool> m_drawRectangleTool;
     std::unique_ptr<DrawLineTool> m_drawLineTool;
+    std::unique_ptr<ValueChangeTool> m_valueChangeTool;
 };
 

@@ -46,12 +46,12 @@
       <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
     <Filter Include="Generated Files\Debug">
-      <UniqueIdentifier>{eadcc8c8-bf82-42d8-873b-6fb38c68e4bd}</UniqueIdentifier>
+      <UniqueIdentifier>{c89d16e4-afc6-4d41-a6f6-a470700aa434}</UniqueIdentifier>
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
     <Filter Include="Generated Files\Release">
-      <UniqueIdentifier>{55870d72-9855-444f-992f-75c50dbabd89}</UniqueIdentifier>
+      <UniqueIdentifier>{864c8eb4-9f79-40f4-8526-0625b59fabae}</UniqueIdentifier>
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
@@ -120,10 +120,19 @@
     <ClCompile Include="Group.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="fileio\HtJsonFileReader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="fileio\JsonFileReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="fileio\JsonFileWriter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fileio\KyJsonFileReader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fileio\KyJsonFileReaderV2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="shapes\Line.cpp">
@@ -162,7 +171,16 @@
     <ClCompile Include="Shape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="shapes\Text.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Tool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="events\ValueChangeEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tools\ValueChangeTool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="VisualEntity.cpp">
@@ -172,31 +190,58 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Debug\moc_Canvas.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="Release\moc_Canvas.cpp">
-      <Filter>Generated Files\Release</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Debug\moc_DrawDialog.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="Release\moc_DrawDialog.cpp">
-      <Filter>Generated Files\Release</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Debug\moc_GlobalDrawProperties.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="Release\moc_GlobalDrawProperties.cpp">
-      <Filter>Generated Files\Release</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Debug\moc_MainWindow.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="Release\moc_MainWindow.cpp">
-      <Filter>Generated Files\Release</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\qrc_resource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shapes\svg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_Canvas.cpp">
       <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_DrawDialog.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_GlobalDrawProperties.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_MainWindow.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug\moc_DrawDialog.cpp%3bDebug\moc_Canvas.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Release\moc_DrawDialog.cpp%3bRelease\moc_Canvas.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug\moc_DrawDialog.cpp%3bDebug\moc_DrawDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Release\moc_DrawDialog.cpp%3bRelease\moc_DrawDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug\moc_DrawDialog.cpp%3bDebug\moc_GlobalDrawProperties.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Release\moc_DrawDialog.cpp%3bRelease\moc_GlobalDrawProperties.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug\moc_DrawDialog.cpp%3bDebug\moc_MainWindow.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Release\moc_DrawDialog.cpp%3bRelease\moc_MainWindow.cpp">
+      <Filter>Generated Files\Release</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -269,6 +314,9 @@
     <ClInclude Include="Group.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="fileio\HtJsonFileReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="interfaces\IDrawable.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -279,6 +327,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="interfaces\IFillable.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="interfaces\IImage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="interfaces\ILine.hpp">
@@ -294,6 +345,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="fileio\JsonFileWriter.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fileio\KyJsonFileReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fileio\KyJsonFileReaderV2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="shapes\Line.hpp">
@@ -335,20 +392,74 @@
     <ClInclude Include="Signal.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="shapes\Text.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Tool.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="events\ValueChangeEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\ValueChangeTool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VisualEntity.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="events\eventdef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="interfaces\iimage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="interfaces\ilabel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shapes\jsondef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug\moc_predefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shapes\svg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_drawdialog.h">
-      <Filter>Generated Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_mainwindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="interfaces\iimage.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="debug\moc_Canvas.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_Canvas.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_DrawDialog.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_DrawDialog.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_GlobalDrawProperties.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_GlobalDrawProperties.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\moc_MainWindow.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_MainWindow.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
     <CustomBuild Include="debug\moc_predefs.h.cbt">
       <Filter>Generated Files</Filter>
     </CustomBuild>

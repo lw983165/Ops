@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui widgets svg network
 
 CONFIG += c++11
 
@@ -50,7 +50,62 @@ SOURCES += main.cpp \
     fileio/JsonFileReader.cpp \
     fileio/JsonFileWriter.cpp \
     fileio/FileReaderFactory.cpp \
-    fileio/FileWriterFactory.cpp
+    fileio/FileWriterFactory.cpp \
+    fileio/HtJsonFileReader.cpp \
+    shapes/svg.cpp \
+    fileio/KyJsonFileReader.cpp \
+    fileio/KyJsonFileReaderV2.cpp \
+    shapes/Text.cpp \
+    commands/BringForwardCommand.cpp \
+    commands/BringToFrontCommand.cpp \
+    commands/BulkOrderCommand.cpp \
+    commands/ChangeOrderCommand.cpp \
+    commands/DeleteSelectedCommand.cpp \
+    commands/DrawCommand.cpp \
+    commands/MoveSelectionCommand.cpp \
+    commands/SendBackwardCommand.cpp \
+    commands/SendToBackCommand.cpp \
+    Debug/moc_Canvas.cpp \
+    Debug/moc_DrawDialog.cpp \
+    Debug/moc_GlobalDrawProperties.cpp \
+    Debug/moc_MainWindow.cpp \
+    fileio/FileReaderFactory.cpp \
+    fileio/FileWriterFactory.cpp \
+    fileio/HtJsonFileReader.cpp \
+    fileio/JsonFileReader.cpp \
+    fileio/JsonFileWriter.cpp \
+    fileio/KyJsonFileReader.cpp \
+    fileio/KyJsonFileReaderV2.cpp \
+    GeneratedFiles/qrc_resource.cpp \
+    shapes/Circle.cpp \
+    shapes/Line.cpp \
+    shapes/Rectangle.cpp \
+    shapes/svg.cpp \
+    shapes/Text.cpp \
+    tools/DrawCircleTool.cpp \
+    tools/DrawLineTool.cpp \
+    tools/DrawRectangleTool.cpp \
+    tools/SelectionTool.cpp \
+    AbstractGroup.cpp \
+    ActiveSelection.cpp \
+    Canvas.cpp \
+    Command.cpp \
+    CommandStack.cpp \
+    DrawDialog.cpp \
+    DrawDialogFactory.cpp \
+    GlobalDrawProperties.cpp \
+    Group.cpp \
+    main.cpp \
+    MainCommandStack.cpp \
+    MainWindow.cpp \
+    PropertyColorButton.cpp \
+    PropertySpinBox.cpp \
+    Selection.cpp \
+    Shape.cpp \
+    Tool.cpp \
+    VisualEntity.cpp \
+    events/ValueChangeEvent.cpp \
+    tools/ValueChangeTool.cpp
 
 HEADERS  += \
     MainWindow.hpp \
@@ -99,7 +154,78 @@ HEADERS  += \
     fileio/FileWriterFactory.hpp \
     commands/ChangePropertyCommand.hpp \
     commands/ChangePropertyCommandList.hpp \
-    Signal.hpp
+    Signal.hpp \
+    fileio/HtJsonFileReader.h \
+    shapes/svg.h \
+    interfaces/IImage.h \
+    fileio/KyJsonFileReader.h \
+    fileio/KyJsonFileReaderV2.h \
+    shapes/Text.h \
+    shapes/jsondef.h \
+    commands/BringForwardCommand.hpp \
+    commands/BringToFrontCommand.hpp \
+    commands/BulkOrderCommand.hpp \
+    commands/ChangeOrderCommand.hpp \
+    commands/ChangePropertyCommand.hpp \
+    commands/ChangePropertyCommandList.hpp \
+    commands/DeleteSelectedCommand.hpp \
+    commands/DrawCommand.hpp \
+    commands/MoveSelectionCommand.hpp \
+    commands/SendBackwardCommand.hpp \
+    commands/SendToBackCommand.hpp \
+    Debug/moc_predefs.h \
+    fileio/FileReaderFactory.hpp \
+    fileio/FileWriterFactory.hpp \
+    fileio/HtJsonFileReader.h \
+    fileio/JsonFileReader.hpp \
+    fileio/JsonFileWriter.hpp \
+    fileio/KyJsonFileReader.h \
+    fileio/KyJsonFileReaderV2.h \
+    GeneratedFiles/ui_drawdialog.h \
+    GeneratedFiles/ui_mainwindow.h \
+    interfaces/IDrawable.hpp \
+    interfaces/IFileReader.hpp \
+    interfaces/IFileWriter.hpp \
+    interfaces/IFillable.hpp \
+    interfaces/iimage.h \
+    interfaces/ILine.hpp \
+    interfaces/ISelectable.hpp \
+    interfaces/ITransformable.hpp \
+    shapes/Circle.hpp \
+    shapes/jsondef.h \
+    shapes/Line.hpp \
+    shapes/Rectangle.hpp \
+    shapes/svg.h \
+    shapes/Text.h \
+    tools/DrawCircleTool.hpp \
+    tools/DrawLineTool.hpp \
+    tools/DrawRectangleTool.hpp \
+    tools/SelectionTool.hpp \
+    AbstractGroup.hpp \
+    ActiveSelection.hpp \
+    Canvas.hpp \
+    Command.hpp \
+    CommandStack.hpp \
+    DrawDialog.hpp \
+    DrawDialogFactory.hpp \
+    GlobalDrawProperties.hpp \
+    Group.hpp \
+    MainCommandStack.hpp \
+    MainWindow.hpp \
+    PropertyColorButton.hpp \
+    PropertySpinBox.hpp \
+    Selection.hpp \
+    Shape.hpp \
+    Signal.hpp \
+    Tool.hpp \
+    VisualEntity.hpp \
+    events/ValueChangeEvent.h \
+    events/eventdef.h \
+    tools/ValueChangeTool.h \
+    interfaces/ilabel.h \
+    fileio/HtJsonFileReader.h \
+    interfaces/IImage.h \
+    interfaces/IImage.h
 
 FORMS    += mainwindow.ui \
     drawdialog.ui
@@ -112,6 +238,7 @@ INCLUDEPATH += \
     commands \
     tools \
     shapes \
+    events \
     fileio
 
 RESOURCES += \

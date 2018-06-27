@@ -8,6 +8,14 @@
 *.so
 *.dll
 *.dylib
+*.exe
+*.pdb
+*.ilk
+*.vcxproj
+*.vcxproj.*
+*.sln
+*.sdf
+*.suo
 
 # Qt-es
 object_script.*.Release
@@ -41,3 +49,7 @@ target_wrapper.*
 
 # QtCreator CMake
 CMakeLists.txt.user*
+
+test/
+
+*.svg

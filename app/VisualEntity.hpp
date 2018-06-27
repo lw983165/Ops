@@ -17,6 +17,9 @@ public:
     void setSelected(bool val) override;
     void toogleSelect() override;
     bool isSelected() override;
+    QString getId() const override;
+
+    void setId(const QString& id);
 
     void setParentGroup(Group *val);
     Group* getParentGroup();
@@ -28,6 +31,7 @@ public:
 protected:
     Group *m_parentGroup;
     ActiveSelection *m_selection;
+    QString id;
 
     int m_index;
 };

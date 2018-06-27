@@ -39,6 +39,16 @@ bool VisualEntity::isSelected()
     return m_selection->isSelected(this);
 }
 
+QString VisualEntity::getId() const
+{
+    return id;
+}
+
+void VisualEntity::setId(const QString &id)
+{
+    this->id = id;
+}
+
 void VisualEntity::setParentGroup(Group *val)
 {
     m_parentGroup = val;

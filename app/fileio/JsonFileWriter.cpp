@@ -54,7 +54,7 @@ QJsonArray JsonFileWriter::writeGroup(Group *group)
             continue;
         }
 
-        Rectangle *r = dynamic_cast<Rectangle*>(ve);
+        kylink::Rectangle *r = dynamic_cast<kylink::Rectangle*>(ve);
 
         if (r) {
             groupArray.append(writeRectangle(r));
@@ -83,7 +83,7 @@ QJsonObject JsonFileWriter::writeCircle(Circle *c)
     return cObj;
 }
 
-QJsonObject JsonFileWriter::writeRectangle(Rectangle *r)
+QJsonObject JsonFileWriter::writeRectangle(kylink::Rectangle *r)
 {
     QJsonObject rObj;
     writeShape(r, rObj);

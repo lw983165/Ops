@@ -4,7 +4,10 @@
 #include <QPoint>
 
 class ActiveSelection;
+namespace kylink {
 class Rectangle;
+}
+
 
 class DrawRectangleTool : public Tool
 {
@@ -19,7 +22,7 @@ protected:
 
 private:
     ActiveSelection *m_selection;
-    Rectangle *m_rectangle;
+    kylink::Rectangle *m_rectangle;
     bool m_clickPressed;
     QPoint m_startPosition;
 };

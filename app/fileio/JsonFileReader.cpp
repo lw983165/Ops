@@ -4,6 +4,9 @@
 #include "Line.hpp"
 #include "Shape.hpp"
 #include "Group.hpp"
+#include "svg.h"
+#include "Text.h"
+#include "jsondef.h"
 
 #include <stdexcept>
 #include <QJsonDocument>
@@ -11,7 +14,7 @@
 
 JsonFileReader::JsonFileReader()
 {
-
+    m_mainGroup = nullptr;
 }
 
 JsonFileReader::~JsonFileReader()
@@ -55,6 +58,10 @@ void JsonFileReader::readGroup(Group *group, const QJsonArray &groupObj)
             group->add(readRectangle(obj));
         } else if (obj["Type"].toString() == "Line") {
             group->add(readLine(obj));
+        } else if (obj["Type"].toString() == "Svg") {
+            group->add(readSvg(obj));
+        } else if (obj["Type"].toString() == "Text") {
+            group->add(readText(obj));
         } else {
             throw std::runtime_error("Invalid visual entity!");
         }
@@ -67,15 +74,29 @@ Circle *JsonFileReader::readCircle(const QJsonObject &c)
     readShape(circle, c);
 
     circle->setRadius(c["Radius"].toInt());
+    circle->setId(c["id"].toString());
 
     return circle;
 }
 
-Rectangle *JsonFileReader::readRectangle(const QJsonObject &r)
+Text *JsonFileReader::readText(const QJsonObject &c)
 {
-    Rectangle *rect = new Rectangle();
-    readShape(rect, r);
+    Text *txt = new Text();
+    txt->setPosition(readPoint(c[POSITION].toObject()));
+    txt->setFillColor(readColor(c[FILLCOLOR].toObject()));
+    txt->setSize(QSize(c[WIDTH].toInt(), c[HEIGHT].toInt()));
+    txt->setFontSize(c[TEXT_FONTSIZE].toInt());
+    txt->setFontFamily(c[TEXT_FONTFAMILY].toString());
+    txt->setText(c[TEXT_TEXT].toString());
+    txt->setId(c["id"].toString());
+    return txt;
+}
 
+kylink::Rectangle *JsonFileReader::readRectangle(const QJsonObject &r)
+{
+    kylink::Rectangle *rect = new kylink::Rectangle();
+    readShape(rect, r);
+    rect->setId(r["id"].toString());
     rect->setWidth(r["Width"].toInt());
     rect->setHeight(r["Height"].toInt());
 
@@ -85,6 +106,7 @@ Rectangle *JsonFileReader::readRectangle(const QJsonObject &r)
 Line *JsonFileReader::readLine(const QJsonObject &l)
 {
     Line *line = new Line();
+    line->setId(l["id"].toString());
 
     line->setP1(readPoint(l["P1"].toObject()));
     line->setP2(readPoint(l["P2"].toObject()));
@@ -92,6 +114,22 @@ Line *JsonFileReader::readLine(const QJsonObject &l)
     line->setLineColor(readColor(l["LineColor"].toObject()));
 
     return line;
+}
+
+Svg *JsonFileReader::readSvg(const QJsonObject &obj)
+{
+    Svg *svg = new Svg();
+    svg->setId(obj["id"].toString());
+    svg->setImagePath(obj["image"].toString());
+    svg->setPosition(readPoint(obj["Position"].toObject()));
+    int w = 0, h = 0;
+    if (obj.contains("width")) {
+        w = obj["width"].toInt();
+        h = obj["height"].toInt();
+    }
+    svg->setSize(QSize(w, h));
+
+    return svg;
 }
 
 void JsonFileReader::readShape(Shape *s, const QJsonObject &obj)
@@ -102,7 +140,7 @@ void JsonFileReader::readShape(Shape *s, const QJsonObject &obj)
     s->setLineThickness(obj["LineThickness"].toInt());
 }
 
-QPoint JsonFileReader::readPoint(const QJsonObject &p) const
+QPoint JsonFileReader::readPoint(const QJsonObject &p)
 {
     QPoint point(p["x"].toInt(),
                  p["y"].toInt());
@@ -110,7 +148,7 @@ QPoint JsonFileReader::readPoint(const QJsonObject &p) const
     return point;
 }
 
-QColor JsonFileReader::readColor(const QJsonObject &c) const
+QColor JsonFileReader::readColor(const QJsonObject &c)
 {
     QColor color(c["r"].toInt(),
                  c["g"].toInt(),

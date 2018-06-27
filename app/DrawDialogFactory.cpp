@@ -57,7 +57,7 @@ DrawDialog *DrawDialogFactory::CreateDrawDialog(MainWindow *parent, Circle *c)
     return d;
 }
 
-DrawDialog *DrawDialogFactory::CreateDrawDialog(MainWindow *parent, Rectangle *r)
+DrawDialog *DrawDialogFactory::CreateDrawDialog(MainWindow *parent, kylink::Rectangle *r)
 {
     DrawDialog *d = CreateShapeDrawDialog(parent, r);
 

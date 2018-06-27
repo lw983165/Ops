@@ -24,7 +24,7 @@ void DrawRectangleTool::mousePress(QMouseEvent *event)
     m_clickPressed = true;
     m_startPosition = event->pos();
 
-    m_rectangle = new Rectangle();
+    m_rectangle = new kylink::Rectangle();
     GlobalDrawProperties::getInstance().setVEProperties(m_rectangle);
     m_canvas->addVisualEntity(m_rectangle);
     m_rectangle->setPosition(m_startPosition);

@@ -2,6 +2,8 @@
 
 #include "Shape.hpp"
 
+namespace kylink {
+
 class Rectangle : public Shape
 {
 public:
@@ -23,3 +25,5 @@ private:
     int m_height;
 };
 
+
+}

@@ -2,6 +2,8 @@
 #include "Group.hpp"
 #include <QPainter>
 #include <algorithm>
+#include <QDebug>
+#include <QDate>
 
 void Selection::draw(QPainter *painter)
 {
@@ -15,13 +17,14 @@ void Selection::draw(QPainter *painter)
     if (m_children.size() > 1) {
         pen.setColor(QColor(250, 150, 150));
         painter->setPen(pen);
-        painter->drawRect(getBoundary());
+//        painter->drawRect(getBoundary());
     }
 
     pen.setColor(QColor(255, 20, 20));
     painter->setPen(pen);
     for (auto child : m_children) {
         painter->drawRect(child->getBoundary());
+        qDebug() << "sub size:" << m_children.size() << ", Date:" << QDate::currentDate();
     }
 }
 

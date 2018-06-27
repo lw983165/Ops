@@ -9,9 +9,9 @@ class Tool
 {
 public:
     Tool(Canvas *canvas);
-    ~Tool();
+    virtual ~Tool();
 
-    bool handleEvent(QEvent *event);
+    virtual bool handleEvent(QEvent *event);
 
 protected:
     virtual void mousePress(QMouseEvent*) {}

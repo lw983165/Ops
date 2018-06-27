@@ -23,12 +23,17 @@
 #include "SendToBackCommand.hpp"
 #include "FileReaderFactory.hpp"
 #include "FileWriterFactory.hpp"
+#include "ValueChangeTool.h"
+#include "ValueChangeEvent.h"
 
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QCloseEvent>
 #include <QFileInfo>
 #include <cassert>
+#include <QDir>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -54,6 +59,8 @@ MainWindow::MainWindow(QWidget *parent) :
             (new DrawRectangleTool(m_canvas));
     m_drawLineTool = std::unique_ptr<DrawLineTool>
             (new DrawLineTool(m_canvas));
+    m_valueChangeTool = std::unique_ptr<ValueChangeTool>
+            (new ValueChangeTool(m_canvas));
 
     m_canvas->setActiveTool(m_selectionTool.get());
 
@@ -74,6 +81,22 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setCentralWidget(m_canvas);
     this->setWindowTitle(getTitle());
+
+    //
+    server = new QTcpServer();
+    int port = 8080;
+    QString ini = QDir::currentPath() + "/conf.ini";
+    QFile iniFile(ini);
+    if (iniFile.exists()) {
+        QSettings conf(ini, QSettings::IniFormat);
+        port = conf.value("port", 8080).toInt();
+    }
+    connect(server, &QTcpServer::newConnection, this, &MainWindow::server_New_Connect);
+    if (server->listen(QHostAddress::Any, port)) {
+        qDebug() << "listen on " << port << " success!";
+    } else {
+        qDebug() << "listen on " << port << " failed!";
+    }
 }
 
 Canvas *MainWindow::getCanvas()
@@ -181,7 +204,7 @@ void MainWindow::on_actionCircle_triggered()
 
 void MainWindow::on_actionRectangle_triggered()
 {
-    Rectangle *r = new Rectangle();
+    kylink::Rectangle *r = new kylink::Rectangle();
     m_canvas->addVisualEntity(r);
 
     DrawDialog *d = DrawDialogFactory::CreateDrawDialog(this, r);
@@ -231,6 +254,14 @@ void MainWindow::resetCommandStack()
     m_mcs->clear();
     setCommandStackIdx(-1);
     mainCommandStackHasChanged();
+}
+
+QEvent *MainWindow::newValueChangeEvent(const QJsonObject *json)
+{
+    ValueChangeEvent* event = new ValueChangeEvent();
+    event->shapeId((*json)["id"].toString());
+    event->valueType((*json)["type"].toInt());
+    return event;
 }
 
 QString MainWindow::getCanvasFile() const
@@ -442,4 +473,37 @@ void MainWindow::on_actionAbout_me_3_triggered()
                        "Created by Lee Zhen Yong AKA bruceoutdoors\n\n"
                        "Wordpress: https://bruceoutdoors.wordpress.com/ \n"
                        "Source code: https://github.com/bruceoutdoors/DrawingApp");
+}
+
+void MainWindow::server_New_Connect()
+{
+    socket = server->nextPendingConnection();
+    QObject::connect(socket, &QTcpSocket::readyRead, this, &MainWindow::socket_Read_Data);
+    QObject::connect(socket, &QTcpSocket::disconnected, this, &MainWindow::socket_Disconnected);
+    qDebug() << "server_New_Connect";
+}
+
+void MainWindow::socket_Read_Data()
+{
+    qDebug() << "socket_Read_Data";
+    QByteArray buffer;
+    buffer = socket->readAll();
+    if(!buffer.isEmpty())
+    {
+        QString str(buffer);
+        qDebug() << str;
+
+        QJsonDocument root(QJsonDocument::fromJson(buffer));
+        QJsonObject json = root.object();
+        QString type = json["type"].toString();
+        if (type.compare("valuechange", Qt::CaseInsensitive) == 0) {
+            m_canvas->setActiveTool(m_valueChangeTool.get());
+            QApplication::postEvent(getCanvas(), newValueChangeEvent(&json));
+        }
+    }
+}
+
+void MainWindow::socket_Disconnected()
+{
+    qDebug() << "socket_Disconnected";
 }

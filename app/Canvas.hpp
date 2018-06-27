@@ -18,6 +18,7 @@ public:
     Canvas(QWidget *parent = 0);
     virtual ~Canvas();
     VisualEntity *getVEFromPosition(int x, int y);
+    VisualEntity *getVEFromId(const QString& id);
     void setBackgroundColor(QColor val);
     void addVisualEntity(VisualEntity *val);
     void setActiveTool(Tool *val);
