@@ -65,10 +65,6 @@ SOURCES += main.cpp \
     commands/MoveSelectionCommand.cpp \
     commands/SendBackwardCommand.cpp \
     commands/SendToBackCommand.cpp \
-    Debug/moc_Canvas.cpp \
-    Debug/moc_DrawDialog.cpp \
-    Debug/moc_GlobalDrawProperties.cpp \
-    Debug/moc_MainWindow.cpp \
     fileio/FileReaderFactory.cpp \
     fileio/FileWriterFactory.cpp \
     fileio/HtJsonFileReader.cpp \
@@ -76,7 +72,6 @@ SOURCES += main.cpp \
     fileio/JsonFileWriter.cpp \
     fileio/KyJsonFileReader.cpp \
     fileio/KyJsonFileReaderV2.cpp \
-    GeneratedFiles/qrc_resource.cpp \
     shapes/Circle.cpp \
     shapes/Line.cpp \
     shapes/Rectangle.cpp \
@@ -173,7 +168,6 @@ HEADERS  += \
     commands/MoveSelectionCommand.hpp \
     commands/SendBackwardCommand.hpp \
     commands/SendToBackCommand.hpp \
-    Debug/moc_predefs.h \
     fileio/FileReaderFactory.hpp \
     fileio/FileWriterFactory.hpp \
     fileio/HtJsonFileReader.h \
@@ -181,8 +175,6 @@ HEADERS  += \
     fileio/JsonFileWriter.hpp \
     fileio/KyJsonFileReader.h \
     fileio/KyJsonFileReaderV2.h \
-    GeneratedFiles/ui_drawdialog.h \
-    GeneratedFiles/ui_mainwindow.h \
     interfaces/IDrawable.hpp \
     interfaces/IFileReader.hpp \
     interfaces/IFileWriter.hpp \
