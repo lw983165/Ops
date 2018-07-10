@@ -114,24 +114,27 @@ HEADERS  += \
     DrawDialogFactory.hpp \
     Selection.hpp \
     Tool.hpp \
+    MainCommandStack.hpp \
     AbstractGroup.hpp \
     PropertySpinBox.hpp \
     PropertyColorButton.hpp \
     GlobalDrawProperties.hpp \
     Command.hpp \
-    interfaces/IDrawable.hpp \
-    interfaces/IFillable.hpp \
-    interfaces/ILine.hpp \
-    interfaces/ISelectable.hpp \
-    interfaces/ITransformable.hpp \
-    shapes/Circle.hpp \
-    shapes/Line.hpp \
-    shapes/Rectangle.hpp \
-    tools/DrawCircleTool.hpp \
-    tools/DrawLineTool.hpp \
-    tools/DrawRectangleTool.hpp \
-    tools/SelectionTool.hpp \
+    Signal.hpp \
     ActiveSelection.hpp \
+    commands/BringForwardCommand.hpp \
+    commands/BringToFrontCommand.hpp \
+    commands/BulkOrderCommand.hpp \
+    commands/ChangeOrderCommand.hpp \
+    commands/ChangePropertyCommand.hpp \
+    commands/ChangePropertyCommandList.hpp \
+    commands/DeleteSelectedCommand.hpp \
+    commands/DrawCommand.hpp \
+    commands/MoveSelectionCommand.hpp \
+    commands/SendBackwardCommand.hpp \
+    commands/SendToBackCommand.hpp \
+    commands/ChangePropertyCommand.hpp \
+    commands/ChangePropertyCommandList.hpp \
     commands/DrawCommand.hpp \
     commands/DeleteSelectedCommand.hpp \
     commands/MoveSelectionCommand.hpp \
@@ -140,49 +143,29 @@ HEADERS  += \
     commands/BringForwardCommand.hpp \
     commands/BringToFrontCommand.hpp \
     commands/SendToBackCommand.hpp \
-    MainCommandStack.hpp \
     CommandStack.hpp \
     commands/BulkOrderCommand.hpp \
-    interfaces/IFileWriter.hpp \
-    interfaces/IFileReader.hpp \
+    fileio/HtJsonFileReader.h \
     fileio/JsonFileReader.hpp \
     fileio/JsonFileWriter.hpp \
     fileio/FileReaderFactory.hpp \
     fileio/FileWriterFactory.hpp \
-    commands/ChangePropertyCommand.hpp \
-    commands/ChangePropertyCommandList.hpp \
-    Signal.hpp \
     fileio/HtJsonFileReader.h \
-    shapes/svg.h \
     fileio/KyJsonFileReader.h \
     fileio/KyJsonFileReaderV2.h \
+    fileio/FileReaderFactory.hpp \
+    fileio/FileWriterFactory.hpp \
+    fileio/HtJsonFileReader.h \
+    fileio/JsonFileReader.hpp \
+    fileio/JsonFileWriter.hpp \
+    fileio/KyJsonFileReader.h \
+    fileio/KyJsonFileReaderV2.h \
+    shapes/Circle.hpp \
+    shapes/Line.hpp \
+    shapes/Rectangle.hpp \
+    shapes/svg.h \
     shapes/Text.h \
     shapes/jsondef.h \
-    commands/BringForwardCommand.hpp \
-    commands/BringToFrontCommand.hpp \
-    commands/BulkOrderCommand.hpp \
-    commands/ChangeOrderCommand.hpp \
-    commands/ChangePropertyCommand.hpp \
-    commands/ChangePropertyCommandList.hpp \
-    commands/DeleteSelectedCommand.hpp \
-    commands/DrawCommand.hpp \
-    commands/MoveSelectionCommand.hpp \
-    commands/SendBackwardCommand.hpp \
-    commands/SendToBackCommand.hpp \
-    fileio/FileReaderFactory.hpp \
-    fileio/FileWriterFactory.hpp \
-    fileio/HtJsonFileReader.h \
-    fileio/JsonFileReader.hpp \
-    fileio/JsonFileWriter.hpp \
-    fileio/KyJsonFileReader.h \
-    fileio/KyJsonFileReaderV2.h \
-    interfaces/IDrawable.hpp \
-    interfaces/IFileReader.hpp \
-    interfaces/IFileWriter.hpp \
-    interfaces/IFillable.hpp \
-    interfaces/ILine.hpp \
-    interfaces/ISelectable.hpp \
-    interfaces/ITransformable.hpp \
     shapes/Circle.hpp \
     shapes/jsondef.h \
     shapes/Line.hpp \
@@ -193,6 +176,7 @@ HEADERS  += \
     tools/DrawLineTool.hpp \
     tools/DrawRectangleTool.hpp \
     tools/SelectionTool.hpp \
+    tools/ValueChangeTool.h \
     AbstractGroup.hpp \
     ActiveSelection.hpp \
     Canvas.hpp \
@@ -212,16 +196,28 @@ HEADERS  += \
     Tool.hpp \
     VisualEntity.hpp \
     events/ValueChangeEvent.h \
-    events/eventdef.h \
-    tools/ValueChangeTool.h \
-    fileio/HtJsonFileReader.h \
     dataSource/GoldenDataSource.h \
     common/PropertySupport.h \
+    interfaces/IFileWriter.hpp \
+    interfaces/IFileReader.hpp \
+    interfaces/IDrawable.hpp \
+    interfaces/IFileReader.hpp \
+    interfaces/IFileWriter.hpp \
+    interfaces/IFillable.hpp \
+    interfaces/ILine.hpp \
+    interfaces/ISelectable.hpp \
+    interfaces/ITransformable.hpp \
+    interfaces/IDrawable.hpp \
+    interfaces/IFillable.hpp \
+    interfaces/ILine.hpp \
+    interfaces/ISelectable.hpp \
+    interfaces/ITransformable.hpp \
     interfaces/IDataSource.h \
     interfaces/ILabel.h \
     interfaces/IImage.h \
     interfaces/IImage.h \
-    interfaces/IPropertySupport.h
+    interfaces/IPropertySupport.h \
+    events/EventDef.h
 
 FORMS    += mainwindow.ui \
     drawdialog.ui

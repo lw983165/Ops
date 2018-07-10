@@ -4,7 +4,7 @@
 #include "Group.hpp"
 #include "ActiveSelection.hpp"
 #include "SelectionTool.hpp"
-#include "events/eventdef.h"
+#include "events/EventDef.h"
 
 #include <QPainter>
 #include <QDebug>
