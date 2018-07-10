@@ -52,5 +52,6 @@ target_wrapper.*
 CMakeLists.txt.user*
 
 test/
+app/x64
 
 *.svg

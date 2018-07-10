@@ -497,8 +497,10 @@ void MainWindow::socket_Read_Data()
         QJsonObject json = root.object();
         QString type = json["type"].toString();
         if (type.compare("valuechange", Qt::CaseInsensitive) == 0) {
+            Tool* current = m_canvas->getActiveTool();
             m_canvas->setActiveTool(m_valueChangeTool.get());
-            QApplication::postEvent(getCanvas(), newValueChangeEvent(&json));
+            QApplication::sendEvent(getCanvas(), newValueChangeEvent(&json));
+            m_canvas->setActiveTool(current);
         }
     }
 }

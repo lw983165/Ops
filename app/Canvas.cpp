@@ -58,6 +58,11 @@ void Canvas::setActiveTool(Tool *val)
     m_activeTool = val;
 }
 
+Tool *Canvas::getActiveTool() const
+{
+    return m_activeTool;
+}
+
 Group *Canvas::getMainGroup()
 {
     return m_mainGroup;

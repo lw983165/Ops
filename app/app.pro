@@ -100,7 +100,9 @@ SOURCES += main.cpp \
     Tool.cpp \
     VisualEntity.cpp \
     events/ValueChangeEvent.cpp \
-    tools/ValueChangeTool.cpp
+    tools/ValueChangeTool.cpp \
+    dataSource/GoldenDataSource.cpp \
+    common/PropertySupport.cpp
 
 HEADERS  += \
     MainWindow.hpp \
@@ -152,7 +154,6 @@ HEADERS  += \
     Signal.hpp \
     fileio/HtJsonFileReader.h \
     shapes/svg.h \
-    interfaces/IImage.h \
     fileio/KyJsonFileReader.h \
     fileio/KyJsonFileReaderV2.h \
     shapes/Text.h \
@@ -179,7 +180,6 @@ HEADERS  += \
     interfaces/IFileReader.hpp \
     interfaces/IFileWriter.hpp \
     interfaces/IFillable.hpp \
-    interfaces/iimage.h \
     interfaces/ILine.hpp \
     interfaces/ISelectable.hpp \
     interfaces/ITransformable.hpp \
@@ -214,10 +214,14 @@ HEADERS  += \
     events/ValueChangeEvent.h \
     events/eventdef.h \
     tools/ValueChangeTool.h \
-    interfaces/ilabel.h \
     fileio/HtJsonFileReader.h \
+    dataSource/GoldenDataSource.h \
+    common/PropertySupport.h \
+    interfaces/IDataSource.h \
+    interfaces/ILabel.h \
     interfaces/IImage.h \
-    interfaces/IImage.h
+    interfaces/IImage.h \
+    interfaces/IPropertySupport.h
 
 FORMS    += mainwindow.ui \
     drawdialog.ui
@@ -235,3 +239,12 @@ INCLUDEPATH += \
 
 RESOURCES += \
     resource.qrc
+
+win32:CONFIG(release, debug|release): LIBS += -L$$(GOLDEN_DIR)/ -lgoldenapi64
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$(GOLDEN_DIR)/ -lgoldenapi64
+
+INCLUDEPATH += $$(GOLDEN_DIR)/
+DEPENDPATH += $$(GOLDEN_DIR)/
+
+#INCLUDEPATH += $$PWD/../../../../golden/api/x64
+#DEPENDPATH += $$PWD/../../../../golden/api/x64

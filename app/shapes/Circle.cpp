@@ -2,6 +2,8 @@
 #include <QPainter>
 #include <QDebug>
 
+#include <winsock2.h>
+
 Circle::Circle() :
     m_radius(50)
 {

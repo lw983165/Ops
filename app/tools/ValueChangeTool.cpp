@@ -3,7 +3,7 @@
 #include "ValueChangeEvent.h"
 #include "VisualEntity.hpp"
 #include "Canvas.hpp"
-#include "ilabel.h"
+#include "ILabel.h"
 
 #include <QDebug>
 
