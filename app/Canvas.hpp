@@ -34,5 +34,6 @@ private:
     Group *m_mainGroup;
     ActiveSelection *m_selection;
     Tool *m_activeTool;
+    Tool *valueChangeTool;
 };
 

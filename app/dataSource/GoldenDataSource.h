@@ -3,9 +3,11 @@
 #include "IDataSource.h"
 #include "Canvas.hpp"
 #include "goldenapi.h"
+#include "BatchValueChangeEvent.h"
 
 #include <QMap>
 #include <QSettings>
+#include <QMutex>
 
 enum SubType { S_Snapshot, S_Tag, S_History };
 enum {POINT = 0, SCAN, CALC};
@@ -40,6 +42,10 @@ public:
     int cancel_subscribe(int type);
 
     GOLDEN_POINT* getPointById(golden_int32 id);
+    int getPointsFromServer(const golden_int32* ids, int count);
+    int removePointsLocal(golden_int32* ids, int count);
+    void update(BIG_POINT point);
+    void releasePoint(golden_int32 id);
 
 private:
     /// according to the SDK manual, callback handler must own special socket which not allowed using for other purpose
@@ -54,6 +60,7 @@ private:
     Canvas* canvas;
 
     QMap<golden_int32, BIG_POINT> points;
+    QMutex mutex4points;
 
 };
 

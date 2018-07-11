@@ -4,8 +4,6 @@
 #include "EventDef.h"
 
 
-enum VT { vBool, vChar, vShort, vInt32, vInt64, vFloat, vDouble, vString, vArray, vObject, Undefine = 0xFF };
-
 class ValueChangeEvent : public QInputEvent
 {
 public:

@@ -102,7 +102,8 @@ SOURCES += main.cpp \
     events/ValueChangeEvent.cpp \
     tools/ValueChangeTool.cpp \
     dataSource/GoldenDataSource.cpp \
-    common/PropertySupport.cpp
+    common/PropertySupport.cpp \
+    events/BatchValueChangeEvent.cpp
 
 HEADERS  += \
     MainWindow.hpp \
@@ -217,7 +218,8 @@ HEADERS  += \
     interfaces/IImage.h \
     interfaces/IImage.h \
     interfaces/IPropertySupport.h \
-    events/EventDef.h
+    events/EventDef.h \
+    events/BatchValueChangeEvent.h
 
 FORMS    += mainwindow.ui \
     drawdialog.ui

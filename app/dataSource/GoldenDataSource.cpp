@@ -1,6 +1,8 @@
 #include "GoldenDataSource.h"
 
 #include <QDebug>
+#include <QDateTime>
+#include <QApplication>
 
 golden_error on_tags_change (golden_int32 count, const golden_int32 *ids, golden_int32 what)
 {
@@ -108,6 +110,25 @@ int GoldenDataSource::stop()
 
 int GoldenDataSource::on_tags_changed(golden_int32 count, const golden_int32 *ids, golden_int32 what)
 {
+    switch (what) {
+    case GOLDEN_TAG_CHANGE_REASON::GOLDEN_TAG_CREATED:
+    case GOLDEN_TAG_CHANGE_REASON::GOLDEN_TAG_UPDATED:
+    case GOLDEN_TAG_CHANGE_REASON::GOLDEN_TAG_RECOVERD:
+        qDebug() << "reload points from server";
+        getPointsFromServer(ids, count);
+        break;
+    case GOLDEN_TAG_CHANGE_REASON::GOLDEN_TAG_REMOVED:
+    case GOLDEN_TAG_CHANGE_REASON::GOLDEN_TAG_PURGED:
+        qDebug() << "remove local points";
+        removePointsLocal(const_cast<golden_int32 *>(ids), count);
+        break;
+    case GOLDEN_TAG_CHANGE_REASON::GOLDEN_TAB_UPDATED:
+    case GOLDEN_TAG_CHANGE_REASON::GOLDEN_TAB_REMOVED:
+        qDebug() << "tab event, not sure what should i do";
+        break;
+    default:
+        break;
+    }
     return 0;
 }
 
@@ -120,8 +141,55 @@ int GoldenDataSource::on_data_changed(golden_int32 count,
                                       const golden_int16 *qualities,
                                       const golden_error *errors)
 {
+    BIG_POINT point;
+
+    ///
+    BatchValueChangeEvent* event = new BatchValueChangeEvent();
+    for (int i = 0; i < count; i++, ids++, datetimes++, ms++,  values++, states++, qualities++, errors++) {
+        if (*errors != GoE_OK) continue;
+        if (!points.contains(*ids)) getPointsFromServer(ids, 1);
+        if (!points.contains(*ids)) continue;
+        point = points[*ids];
+        if (*qualities != GOLDEN_QUALITY::GOLDEN_Q_GOOD) continue;
+        /// format time
+        QDateTime time = QDateTime::fromTime_t(*datetimes);
+        QString strTime = time.toString("yyyy-MM-ddThh:mm:ss");
+        if (std::get<0>(point)->millisecond) strTime.append(":").append(*ms);
+        /// format value
+        QString strVal;
+        switch (std::get<0>(point)->type) {
+        case GOLDEN_REAL16:
+        case GOLDEN_REAL32:
+        case GOLDEN_REAL64:
+            strVal = QString::number(*values,'f', 5);
+            break;
+        case GOLDEN_BOOL:
+        case GOLDEN_UINT8:
+        case GOLDEN_INT8:
+        case GOLDEN_CHAR:
+        case GOLDEN_UINT16:
+        case GOLDEN_INT16:
+        case GOLDEN_UINT32:
+        case GOLDEN_INT32:
+        case GOLDEN_INT64:
+            strVal = QString::number(*states);
+        default:
+            return -1;
+        }
+        UiValue* val = new UiValue();
+        val->data_id = *ids;
+        val->ui_id = "";
+        val->time = strTime;
+        val->value_type = std::get<0>(point)->type;
+        val->value = strVal;
+        event->add(val);
+    }
+
+    ///
+    QApplication::sendEvent(canvas, event);
     return 0;
 }
+
 
 int GoldenDataSource::subscribe(golden_int32 count, const golden_int32 *ids, int type)
 {
@@ -141,18 +209,64 @@ int GoldenDataSource::cancel_subscribe(int type)
 
 GOLDEN_POINT *GoldenDataSource::getPointById(golden_int32 id)
 {
-    if (points.contains(id)) return std::get<0>(points[id]);
+    if (!points.contains(id))
+        getPointsFromServer(&id, 1);
+    return std::get<0>(points[id]);
+}
+
+int GoldenDataSource::getPointsFromServer(const golden_int32 *ids, int count)
+{
     ///
-    GOLDEN_POINT *point = new  GOLDEN_POINT();
-    point->id = id;
-    GOLDEN_SCAN_POINT* scan = new GOLDEN_SCAN_POINT();
-    GOLDEN_CALC_POINT* calc = new GOLDEN_CALC_POINT();
-    golden_error err;
-    golden_error ret = gob_get_points_property(apiHandle, 1, point, scan, calc, &err);
+    GOLDEN_POINT *point = new GOLDEN_POINT[count];
+    GOLDEN_POINT *p = point;
+    golden_int32 *pIds = const_cast<golden_int32 *>(ids);
+    for(int i = 0; i < count; i++, p++, pIds++) p->id = *pIds;
+
+    GOLDEN_SCAN_POINT* scan = new GOLDEN_SCAN_POINT[count];
+    GOLDEN_CALC_POINT* calc = new GOLDEN_CALC_POINT[count];
+    golden_error* err = new golden_error[count];
+    golden_error ret = gob_get_points_property(apiHandle, count, point, scan, calc, err);
     if (ret == GoE_OK) {
-        points[id] = std::make_tuple(point, scan, calc);
-        return point;
+        GOLDEN_POINT* p = point;
+        GOLDEN_SCAN_POINT* pScan = scan;
+        GOLDEN_CALC_POINT* pCalc = calc;
+        golden_int32 *pIds = const_cast<golden_int32 *>(ids);;
+        golden_error* pErr = err;
+        mutex4points.lock();
+        for(int i = 0; i < count; i++, p++, pScan++, pCalc++, pIds++, pErr++) {
+            if (*pErr == GoE_OK)
+                update(std::make_tuple(p, pScan, pCalc));
+        }
+        mutex4points.unlock();
+
+        return 0;
     } else {
-        return nullptr;
+        return ret;
+    }
+}
+
+int GoldenDataSource::removePointsLocal(golden_int32 *ids, int count)
+{
+    mutex4points.lock();
+    for (int i = 0; i < count; i++, ids++) releasePoint(*ids);
+    mutex4points.unlock();
+    return 0;
+}
+
+void GoldenDataSource::update(BIG_POINT point)
+{
+    golden_int32 id = std::get<0>(points[id])->id;
+    releasePoint(id);
+    points[id] = point;
+}
+
+void GoldenDataSource::releasePoint(golden_int32 id)
+{
+    if (points.contains(id)) {
+        BIG_POINT old = points[id];
+        delete std::get<0>(old);
+        delete std::get<1>(old);
+        delete std::get<2>(old);
+        points.remove(id);
     }
 }
